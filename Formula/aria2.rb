@@ -5,6 +5,16 @@ class Aria2 < Formula
   sha256 "60a420ad7085eb616cb6e2bdf0a7206d68ff3d37fb5a956dc44242eb2f79b66b"
   license "GPL-2.0-or-later"
 
+  bottle do
+    root_url "https://ghcr.io/v2/otsge/stash"
+    sha256 cellar: :any,                 arm64_tahoe:   "e5c1e288dae9e857fdec062f7572677577554f2de65beb202a24c7fefedcf281"
+    sha256 cellar: :any,                 arm64_sequoia: "21611797bddcf2ead3cfdc4fb6741aba243c169cf347411aabcf796e598f60f2"
+    sha256 cellar: :any,                 arm64_sonoma:  "4569e1d440e5b22169314897da2acd88b8cc49dc21ec68f946b1dcc8d560a624"
+    sha256 cellar: :any,                 sequoia:       "00361e578e603ae65e6f06ef625f7b8c90da2a443d6256a205bd51debd27d0bf"
+    sha256 cellar: :any_skip_relocation, arm64_linux:   "cd1d6be7baa14ff7c38d9042219fd2bdc79f1f14059a6d8b1ae778ac0ecfc0c9"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "7222a3bd335778ff1992f8fcac6637b06369d7575023c63bb0e34f7958611a07"
+  end
+
   head do
     url "https://github.com/aria2/aria2.git", branch: "master"
 
