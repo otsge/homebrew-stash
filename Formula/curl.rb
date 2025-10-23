@@ -24,6 +24,14 @@ class Curl < Formula
     regex(/href=.*?curl[._-]v?(.*?)\.t/i)
   end
 
+  bottle do
+    root_url "https://ghcr.io/v2/otsge/stash"
+    sha256 cellar: :any, arm64_tahoe:   "07cd25d8e10613e5c352862ba3de8d7302544cec5b6abcb43d9e0c6f259beca6"
+    sha256 cellar: :any, arm64_sequoia: "ad00414e0906765dd17c7e51397a04544c91c8aa208d1248b208c764785b49c6"
+    sha256 cellar: :any, arm64_sonoma:  "60c49f49b0c29ad6fb89d7e86befd8d82daa9b81e17967dbe5746c3a009f4e2c"
+    sha256 cellar: :any, sequoia:       "15b8bf725249c02a54c23d9ea59cb1e7cf626fa24d8c3358e2d649d860c25e8b"
+  end
+
   head do
     url "https://github.com/curl/curl.git", branch: "master"
 
