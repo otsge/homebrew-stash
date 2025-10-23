@@ -100,7 +100,7 @@ jobs:
         if: ${{ runner.os == 'macOS' }}
         run: |
           brew install --cask fuse-t
-          /bin/bash -c /Users/runner/work/homebrew-stash/homebrew-stash/cmd/fuse-t-links-add > /dev/null
+          brew fuse-t-links-add > /dev/null
 
       - name: Base64-encode GITHUB_TOKEN for HOMEBREW_DOCKER_REGISTRY_TOKEN
         id: base64-encode
