@@ -99,8 +99,7 @@ jobs:
       - name: Install FUSE-T
         if: ${{ runner.os == 'macOS' }}
         run: |
-          brew install --cask fuse-t
-          brew fuse-t-links-add > /dev/null
+          brew install --cask otsge/stash/fuse-t
 
       - name: Base64-encode GITHUB_TOKEN for HOMEBREW_DOCKER_REGISTRY_TOKEN
         id: base64-encode
