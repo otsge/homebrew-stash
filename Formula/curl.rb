@@ -26,10 +26,10 @@ class Curl < Formula
 
   bottle do
     root_url "https://ghcr.io/v2/otsge/stash"
-    sha256 cellar: :any, arm64_tahoe:   "07cd25d8e10613e5c352862ba3de8d7302544cec5b6abcb43d9e0c6f259beca6"
-    sha256 cellar: :any, arm64_sequoia: "ad00414e0906765dd17c7e51397a04544c91c8aa208d1248b208c764785b49c6"
-    sha256 cellar: :any, arm64_sonoma:  "60c49f49b0c29ad6fb89d7e86befd8d82daa9b81e17967dbe5746c3a009f4e2c"
-    sha256 cellar: :any, sequoia:       "15b8bf725249c02a54c23d9ea59cb1e7cf626fa24d8c3358e2d649d860c25e8b"
+    sha256 cellar: :any, arm64_tahoe:   "1624cb90c9e0c25de28f869de27b9cbc5aaeef581e8e0a9fdf2cc7f6dc058f96"
+    sha256 cellar: :any, arm64_sequoia: "bb020f909fe8552735d25f28af8b83349afb0de2a02a0a41817cd9711b92a47d"
+    sha256 cellar: :any, arm64_sonoma:  "d78b8e8e782995d2b67bfb4720ed917e3c7d8a4cdb9b84855e0d55b7be2b1959"
+    sha256 cellar: :any, sequoia:       "6f59df54c2f9d1fb968d1fa6b49d3d1b204f44cfc6cb19d9c411bbb0441d95f8"
   end
 
   head do
@@ -69,11 +69,11 @@ class Curl < Formula
   end
 
   def install
-    # tag_name = "curl-#{version.to_s.tr(".", "_")}"
-    # if build.stable? && stable.mirrors.grep(/github\.com/).first.exclude?(tag_name)
-    #   odie "Tag name #{tag_name} is not found in the GitHub mirror URL! " \
-    #        "Please make sure the URL is correct."
-    # end
+    tag_name = "curl-#{version.to_s.tr(".", "_")}"
+    if build.stable? && stable.mirrors.grep(%r{\Ahttps?://(www\.)?github\.com/}).first.exclude?(tag_name)
+      odie "Tag name #{tag_name} is not found in the GitHub mirror URL! " \
+           "Please make sure the URL is correct."
+    end
 
     # Use our `curl` formula with `wcurl`
     inreplace "scripts/wcurl", 'CMD="curl "', "CMD=\"#{opt_bin}/curl \""
