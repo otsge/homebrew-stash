@@ -22,17 +22,15 @@ cask "parsec-startup" do
   pkg "parsec-macos-startup.pkg"
 
   postflight do
-    set_ownership ["/Users/Shared/.parsec", "/Users/Shared/.parsec-persistent"]
+    set_ownership "~/.parsec"
   end
 
-  uninstall launchctl: "com.parsec.app",
-            quit:      "tv.parsec.www",
-            pkgutil:   "tv.parsec.www"
+  uninstall quit:    "tv.parsec.www",
+            pkgutil: "tv.parsec.www"
 
   zap trash: [
     "/Library/LaunchAgents/com.parsec.app.plist",
-    "/Users/Shared/.parsec",
-    "/Users/Shared/.parsec-persistent",
+    "~/.parsec",
     "~/Library/Caches/tv.parsec.www",
     "~/Library/HTTPStorages/tv.parsec.www",
     "~/Library/Preferences/tv.parsec.www.plist",

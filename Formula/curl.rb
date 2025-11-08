@@ -1,12 +1,23 @@
 class Curl < Formula
   desc "Get a file from an HTTP, HTTPS or FTP server with HTTP/3 support using quiche"
   homepage "https://curl.se"
-  url "https://curl.se/download/curl-8.17.0.tar.bz2"
-  mirror "https://github.com/curl/curl/releases/download/curl-8_17_0/curl-8.17.0.tar.bz2"
-  mirror "http://fresh-center.net/linux/www/curl-8.17.0.tar.bz2"
-  mirror "http://fresh-center.net/linux/www/legacy/curl-8.17.0.tar.bz2"
-  sha256 "230032528ce5f85594d4f3eace63364c4244ccc3c801b7f8db1982722f2761f4"
   license "curl"
+
+  stable do
+    url "https://curl.se/download/curl-8.17.0.tar.bz2"
+    mirror "https://github.com/curl/curl/releases/download/curl-8_17_0/curl-8.17.0.tar.bz2"
+    mirror "http://fresh-center.net/linux/www/curl-8.17.0.tar.bz2"
+    mirror "http://fresh-center.net/linux/www/legacy/curl-8.17.0.tar.bz2"
+    sha256 "230032528ce5f85594d4f3eace63364c4244ccc3c801b7f8db1982722f2761f4"
+
+    resource "quiche" do
+      url "https://github.com/cloudflare/quiche.git",
+      tag:      "0.24.6",
+      revision: "020a43a0a5eed76f57dd3ce5012149aa576c594d"
+      mirror "http://www.surge.box.ca/files/quiche-0.24.6.tar.bz2"
+      sha256 "a5161fb0488a23ec2e31f85662ea8fb81875bea2358a3c26e2442e1605b72635"
+    end
+  end
 
   livecheck do
     url "https://curl.se/download/"
@@ -37,6 +48,7 @@ class Curl < Formula
 
   depends_on "cmake" => :build
   depends_on "pkgconf" => [:build, :test]
+
   depends_on "brotli"
   depends_on "libnghttp2"
   depends_on "libssh2"
@@ -54,14 +66,6 @@ class Curl < Formula
 
   on_monterey :or_older do
     depends_on "libidn2"
-  end
-
-  resource "quiche" do
-    url "https://github.com/cloudflare/quiche.git",
-    tag:      "0.24.6",
-    revision: "020a43a0a5eed76f57dd3ce5012149aa576c594d"
-    mirror "http://www.surge.box.ca/files/quiche-0.24.6.tar.bz2"
-    sha256 "a5161fb0488a23ec2e31f85662ea8fb81875bea2358a3c26e2442e1605b72635"
   end
 
   def install
@@ -116,14 +120,13 @@ class Curl < Formula
       --without-ca-path
       --with-ca-fallback
       --with-default-ssl-backend=openssl
-      --with-apple-sectrust
       --with-gssapi
       --with-librtmp
       --with-libssh2
-      --with-quiche=#{lib}/pkgconfig
       --without-libpsl
       --with-zsh-functions-dir=#{zsh_completion}
       --with-fish-functions-dir=#{fish_completion}
+      --with-quiche=#{lib}/pkgconfig
       --enable-alt-svc
       --enable-ech
     ]
