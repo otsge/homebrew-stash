@@ -42,7 +42,6 @@ jobs:
           - macos-15
           - macos-15-intel
           - macos-14
-      # fail-fast: false
     runs-on: ${{ matrix.os }}
     permissions:
       actions: read
@@ -88,13 +87,16 @@ jobs:
           key: ${{ steps.cache-key.outputs.prefix }}-rubygems-${{ steps.set-up-homebrew.outputs.gems-hash }}
           restore-keys: ${{ steps.cache-key.outputs.prefix }}-rubygems-
 
-      - name: Install Homebrew Bundler RubyGems
-        if: steps.cache.outputs.cache-hit != 'true'
-        run: brew install-bundler-gems
+      # - name: Install Homebrew Bundler RubyGems
+      #   if: steps.cache.outputs.cache-hit != 'true'
+      #   run: brew install-bundler-gems
 
       - name: Setup Homebrew test environment
         if: matrix.os != 'ubuntu-24.04-arm'
-        run: brew test-bot --only-setup
+        run: |
+          brew install jq
+          [[ -e "$(brew tap-info --json homebrew/core | jq -r '.[].path')/Formula/o/openssl@1.1.rb" ]] && rm "$(brew tap-info --json homebrew/core | jq -r '.[].path')/Formula/o/openssl@1.1.rb"
+          brew test-bot --only-setup
 
       - name: Install FUSE-T
         if: ${{ runner.os == 'macOS' }}
@@ -144,7 +146,7 @@ jobs:
 
       - name: Upload bottles as artifact
         if: always() && github.event_name == 'pull_request'
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@main
         with:
           name: bottles_${{ steps.cache-key.outputs.prefix }}
           path: '*.bottle.*'
@@ -157,5 +159,4 @@ jobs:
       env:
         GH_TOKEN: ${{secrets.AUTOBUMP_TOKEN}}
         PR_NUMBER: ${{ github.event.pull_request.number }}
-      run: |
-        gh pr edit "${PR_NUMBER}" --add-label "pr-pull" --repo "otsge/homebrew-stash"
+      run: gh pr edit "${PR_NUMBER}" --add-label "pr-pull" --repo "otsge/homebrew-stash"
