@@ -18,6 +18,7 @@ cask "fuse-t" do
   postflight do
     system_command "#{HOMEBREW_PREFIX}/bin/brew",
                    args: ["fuse-t-links-add"]
+    set_ownership ["/usr/local/include", "/usr/local/lib"]
   end
 
   uninstall script: {
