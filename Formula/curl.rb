@@ -154,6 +154,9 @@ class Curl < Formula
     system bin/"curl", "-L", stable.url, "-o", filename
     filename.verify_checksum stable.checksum
 
+    # Verify QUIC and HTTP3 support
+    system bin/"curl", "--verbose", "--http3-only", "--head", "https://cloudflare-quic.com"
+
     # Check dependencies linked correctly
     curl_features = shell_output("#{bin}/curl-config --features").split("\n")
     %w[brotli GSS-API HTTP2 HTTP3 IDN libz SSL zstd].each do |feature|
