@@ -13,15 +13,6 @@ class Curl < Formula
     regex(/href=.*?curl[._-]v?(.*?)\.t/i)
   end
 
-  bottle do
-    root_url "https://ghcr.io/v2/otsge/stash"
-    rebuild 1
-    sha256 cellar: :any, arm64_tahoe:   "4c6f1d6622591222ff0e9cd6a7b1eca820a54278ed5d5b93f37f9b8066ccd296"
-    sha256 cellar: :any, arm64_sequoia: "eafa8be3b28628ec48e472fe850e21e09dc4e32c10365cd6f08208a6fddfe6a0"
-    sha256 cellar: :any, arm64_sonoma:  "7418184f64c94c2885dc47536e298d32b519a9a142833c44bff647a4e6d5af49"
-    sha256 cellar: :any, sequoia:       "024344c4d5c39022eb4d87fac269db62046495aca91f054a846dfa4c6ae973a5"
-  end
-
   head do
     url "https://github.com/curl/curl.git", branch: "master"
 
@@ -153,6 +144,9 @@ class Curl < Formula
     filename = testpath/"test.tar.gz"
     system bin/"curl", "-L", stable.url, "-o", filename
     filename.verify_checksum stable.checksum
+
+    # Verify QUIC and HTTP3 support
+    system bin/"curl", "--verbose", "--http3-only", "--head", "https://cloudflare-quic.com"
 
     # Check dependencies linked correctly
     curl_features = shell_output("#{bin}/curl-config --features").split("\n")
