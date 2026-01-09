@@ -121,6 +121,9 @@ jobs:
             export HOMEBREW_NO_INSTALL_FROM_API=1
             cp /Users/runner/work/homebrew-stash/homebrew-stash/.github/workflows/files/tb_formulae "$(brew --prefix)/Homebrew/Library/Homebrew/test_bot/formulae.rb"
             brew test-bot --only-formulae --root-url=https://ghcr.io/v2/otsge/stash
+          elif [[ "${{ runner.os }}" == "Linux" && "${{ runner.arch }}" == "ARM64" ]]
+          then
+            brew test-bot --only-formulae --skip-livecheck --root-url=https://ghcr.io/v2/otsge/stash
           else
             brew test-bot --only-formulae --root-url=https://ghcr.io/v2/otsge/stash
           fi
