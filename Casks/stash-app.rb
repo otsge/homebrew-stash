@@ -8,6 +8,8 @@ cask "stash-app" do
   desc "Organizer for your porn, written in Go"
   homepage "https://stashapp.cc/"
 
+  conflicts_with cask: "stash-app@dev"
+
   app "Stash.app"
 
   # zap trash: [
