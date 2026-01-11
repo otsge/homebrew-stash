@@ -7,6 +7,8 @@ cask "mediadownloader" do
   desc "Qt/C++ front end to yt-dlp, youtube-dl, gallery-dl, and more"
   homepage "https://github.com/mhogomchungu/media-downloader"
 
+  conflicts_with cask: "mediadownloader@git"
+
   app "MediaDownloader.app"
 
   zap trash: [
