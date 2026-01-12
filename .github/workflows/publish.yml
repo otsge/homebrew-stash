@@ -9,6 +9,10 @@ env:
   HOMEBREW_DEVELOPER: 1
   HOMEBREW_NO_ANALYTICS: 1
 
+defaults:
+  run:
+    shell: bash -xeuo pipefail {0}
+
 jobs:
   pr-pull:
     if: contains(github.event.pull_request.labels.*.name, 'pr-pull')
@@ -24,6 +28,8 @@ jobs:
       - name: Set up Homebrew
         uses: Homebrew/actions/setup-homebrew@main
         with:
+          cask: false
+          core: false
           token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Set up git
@@ -39,10 +45,10 @@ jobs:
           PULL_REQUEST: ${{ github.event.pull_request.number }}
         run: brew pr-pull --debug --tap="$GITHUB_REPOSITORY" "$PULL_REQUEST"
 
-      # - name: Push commits
-      #   uses: Homebrew/actions/git-try-push@main
-      #   with:
-      #     branch: main
+      - name: Push commits
+        uses: Homebrew/actions/git-try-push@main
+        with:
+          branch: main
 
       # - name: Delete branch
       #   if: github.event.pull_request.head.repo.fork == false
@@ -50,8 +56,8 @@ jobs:
       #     BRANCH: ${{ github.event.pull_request.head.ref }}
       #   run: git push --delete origin "$BRANCH"
 
-      - name: Merge pull request
-        env:
-          GH_TOKEN: ${{secrets.AUTOBUMP_TOKEN}}
-          PR_NUMBER: ${{ github.event.pull_request.number }}
-        run: gh pr merge "${PR_NUMBER}" --delete-branch --squash --repo "${GITHUB_REPOSITORY}"
+      # - name: Merge pull request
+      #   env:
+      #     GH_TOKEN: ${{secrets.AUTOBUMP_TOKEN}}
+      #     PR_NUMBER: ${{ github.event.pull_request.number }}
+      #   run: gh pr merge "${PR_NUMBER}" --delete-branch --squash --repo "${GITHUB_REPOSITORY}"
