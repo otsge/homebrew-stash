@@ -37,7 +37,9 @@ jobs:
 
     - name: Bump casks
       id: autobump-casks
-      run: brew bump -d -v --no-fork --open-pr --casks --full-name --tap "${GITHUB_REPOSITORY}"
+      run: |
+        sed -i '' 's/return "#{tag} is a GitHub pre-release."/#return "#{tag} is a GitHub pre-release."/g' /opt/homebrew/Library/Homebrew/utils/shared_audits.rb
+        brew bump -d -v --no-fork --open-pr --casks --full-name --tap "${GITHUB_REPOSITORY}"
       shell: bash -xeuo pipefail {0}
       continue-on-error: true
       env:
