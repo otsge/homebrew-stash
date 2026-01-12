@@ -1,11 +1,11 @@
 name: brew test-bot
 
 on:
-  push:
-    branches:
-      - main
-    paths:
-      - '**.rb'
+  # push:
+  #   branches:
+  #     - main
+  #   paths:
+  #     - '**.rb'
   pull_request:
     paths:
       - '**.rb'

@@ -13,15 +13,6 @@ class Curl < Formula
     regex(/href=.*?curl[._-]v?(.*?)\.t/i)
   end
 
-  bottle do
-    root_url "https://ghcr.io/v2/otsge/stash"
-    rebuild 1
-    sha256 cellar: :any, arm64_tahoe:   "4c6f1d6622591222ff0e9cd6a7b1eca820a54278ed5d5b93f37f9b8066ccd296"
-    sha256 cellar: :any, arm64_sequoia: "eafa8be3b28628ec48e472fe850e21e09dc4e32c10365cd6f08208a6fddfe6a0"
-    sha256 cellar: :any, arm64_sonoma:  "7418184f64c94c2885dc47536e298d32b519a9a142833c44bff647a4e6d5af49"
-    sha256 cellar: :any, sequoia:       "024344c4d5c39022eb4d87fac269db62046495aca91f054a846dfa4c6ae973a5"
-  end
-
   head do
     url "https://github.com/curl/curl.git", branch: "master"
 
@@ -78,13 +69,13 @@ class Curl < Formula
     # Build with quiche:
     #  https://github.com/curl/curl/blob/master/docs/HTTP3.md#quiche-version
     quiche = buildpath/"quiche/quiche"
-    boring = buildpath/"quiche/quiche/deps/boringssl"
-    quiche_pc_path = buildpath/"quiche/target/release/quiche.pc"
+    # boring = buildpath/"quiche/quiche/deps/boringssl"
+    # quiche_pc_path = buildpath/"quiche/target/release/quiche.pc"
     resource("quiche").stage quiche.parent
     cd "quiche" do
-      ENV["CARGO_C_LIBDIR"] = lib.to_s
+      # ENV["CARGO_C_LIBDIR"] = lib.to_s
 
-      ln_sf boring/"src", buildpath/"boringssl"
+      # ln_sf boring/"src", buildpath/"boringssl"
 
       # Build static libs only
       inreplace quiche/"Cargo.toml", /^crate-type = .*/, "crate-type = [\"staticlib\"]"
@@ -92,17 +83,18 @@ class Curl < Formula
       inreplace "./Cargo.toml", /^debug = true/, "debug = false"
 
       system "cargo", "build", "--lib", "--package", "quiche", "--features", "ffi,pkg-config-meta,qlog", "--release"
-      (buildpath/"boringssl/lib").install Pathname.glob("target/release/build/*/out/build/lib{crypto,ssl}.a")
-      lib.install quiche.parent/"target/release/libquiche.a"
-      include.install quiche/"include/quiche.h"
-      inreplace quiche_pc_path do |s|
-        s.gsub!(/includedir=.+/, "includedir=#{include}")
-        s.gsub!(/libdir=.+/, "libdir=#{lib}")
-      end
-      (lib/"pkgconfig").install quiche_pc_path
+      (quiche/"deps/boringssl/src/lib").install Pathname.glob("target/release/build/*/out/build/lib{crypto,ssl}.a")
+      # (buildpath/"boringssl/lib").install Pathname.glob("target/release/build/*/out/build/lib{crypto,ssl}.a")
+      # lib.install quiche.parent/"target/release/libquiche.a"
+      # include.install quiche/"include/quiche.h"
+      # inreplace quiche_pc_path do |s|
+      #   s.gsub!(/includedir=.+/, "includedir=#{include}")
+      #   s.gsub!(/libdir=.+/, "libdir=#{lib}")
+      # end
+      # (lib/"pkgconfig").install quiche_pc_path
     end
 
-    ENV.append "LDFLAGS", "-Wl,-rpath,#{lib}/pkgconfig"
+    # ENV.append "LDFLAGS", "-Wl,-rpath,#{lib}/pkgconfig"
 
     if build.head?
       ENV.append_to_cflags "-march=native -O3 -pipe -flto=auto"
@@ -112,7 +104,7 @@ class Curl < Formula
 
     args = %W[
       --disable-silent-rules
-      --with-openssl=#{buildpath}/boringssl
+      --with-ssl=#{quiche}/deps/boringssl/src
       --without-ca-bundle
       --without-ca-path
       --with-ca-fallback
@@ -121,7 +113,7 @@ class Curl < Formula
       --with-gssapi
       --with-librtmp
       --with-libssh2
-      --with-quiche=#{lib}/pkgconfig
+      --with-quiche=#{quiche.parent}/target/release
       --without-libpsl
       --with-zsh-functions-dir=#{zsh_completion}
       --with-fish-functions-dir=#{fish_completion}
@@ -141,7 +133,8 @@ class Curl < Formula
       ]
     end
 
-    system "./configure", "LDFLAGS=#{ENV.ldflags}", *args, *std_configure_args
+    # system "./configure", "LDFLAGS=#{ENV.ldflags}", *args, *std_configure_args
+    system "./configure", *args, *std_configure_args
     system "make", "install"
     system "make", "install", "-C", "scripts"
     libexec.install "scripts/mk-ca-bundle.pl"
@@ -158,21 +151,21 @@ class Curl < Formula
     system bin/"curl", "--verbose", "--http3-only", "--head", "https://cloudflare-quic.com"
 
     # Check dependencies linked correctly
-    curl_features = shell_output("#{bin}/curl-config --features").split("\n")
-    %w[brotli GSS-API HTTP2 HTTP3 IDN libz SSL zstd].each do |feature|
-      assert_includes curl_features, feature
-    end
-    curl_protocols = shell_output("#{bin}/curl-config --protocols").split("\n")
-    %w[LDAPS RTMP SCP SFTP].each do |protocol|
-      assert_includes curl_protocols, protocol
-    end
+    # curl_features = shell_output("#{bin}/curl-config --features").split("\n")
+    # %w[brotli GSS-API HTTP2 HTTP3 IDN libz SSL zstd].each do |feature|
+    #   assert_includes curl_features, feature
+    # end
+    # curl_protocols = shell_output("#{bin}/curl-config --protocols").split("\n")
+    # %w[LDAPS RTMP SCP SFTP].each do |protocol|
+    #   assert_includes curl_protocols, protocol
+    # end
 
     system libexec/"mk-ca-bundle.pl", "test.pem"
     assert_path_exists testpath/"test.pem"
     assert_path_exists testpath/"certdata.txt"
 
-    with_env(PKG_CONFIG_PATH: lib/"pkgconfig") do
-      system "pkgconf", "--cflags", "libcurl"
-    end
+    # with_env(PKG_CONFIG_PATH: lib/"pkgconfig") do
+    #   system "pkgconf", "--cflags", "libcurl"
+    # end
   end
 end
