@@ -2,14 +2,9 @@ class Teldrive < Formula
   desc "Organizer for your telegram files"
   homepage "https://github.com/tgdrive/teldrive"
   url "https://github.com/tgdrive/teldrive.git",
-        tag:      "1.7.4",
-        revision: "ad2611d3cfa3c46897d1bb823415595317ae2455"
+        tag:      "1.7.5",
+        revision: "4f431280ae5ef9ab56eb3c68ff5ceafb178504f1"
   license "MIT"
-
-  livecheck do
-    url :stable
-    strategy :github_latest
-  end
 
   bottle do
     root_url "https://ghcr.io/v2/otsge/stash"
