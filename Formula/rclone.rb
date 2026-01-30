@@ -1,8 +1,8 @@
 class Rclone < Formula
   desc "Rsync for cloud storage"
   homepage "https://rclone.org/"
-  url "https://github.com/rclone/rclone/archive/refs/tags/v1.72.1.tar.gz"
-  sha256 "322c73932b533571880832c0e07abdf9492c7f329b7d1dcdbd2a195fa2635a77"
+  url "https://github.com/rclone/rclone/archive/refs/tags/v1.73.0.tar.gz"
+  sha256 "91c777ce0bf41caa5de9aeaeae37310f9310bd7b12b5eee7337f57cbaae5830c"
   license "MIT"
   head "https://github.com/rclone/rclone.git", branch: "master"
 
