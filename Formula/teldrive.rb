@@ -3,7 +3,7 @@ class Teldrive < Formula
   homepage "https://github.com/tgdrive/teldrive"
   url "https://github.com/tgdrive/teldrive.git",
         tag:      "1.8.0",
-        revision: "eaa2b3577e6f75d00134662309a5424601c18717"
+        revision: "6a8d89dd6a56780eb3e49dea0b5c287be83cf1b6"
   license "MIT"
 
   bottle do
