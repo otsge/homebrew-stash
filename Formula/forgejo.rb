@@ -22,7 +22,7 @@ class Forgejo < Formula
   uses_from_macos "sqlite"
 
   def install
-    ENV["CGO_ENABLED"] = "1"
+    ENV["CGO_ENABLED"] = "1" if OS.linux? && Hardware::CPU.arm?
     ENV["TAGS"] = "bindata timetzdata sqlite sqlite_unlock_notify"
     system "make", "build"
     system "go", "build", "contrib/environment-to-ini/environment-to-ini.go"
