@@ -15,11 +15,9 @@ class Curl < Formula
 
   bottle do
     root_url "https://ghcr.io/v2/otsge/stash"
-    rebuild 2
-    sha256 cellar: :any, arm64_tahoe:   "9af01e33e9a0e1be2fda88f0fcf756e7ca8d25d4a631aabfe7292f18592bcf61"
-    sha256 cellar: :any, arm64_sequoia: "5e13824a9e69d97f13c7ea003f244bb86980e44d47b5e78f5875db7de933483b"
-    sha256 cellar: :any, arm64_sonoma:  "71615f9ddd6c5da99619954086f77207ee35f99712a9f734cf9a33ebe3b7e58c"
-    sha256 cellar: :any, sequoia:       "fecd4dc8d35d84bd93f141195b9c53bafe01d00401877250328e0eb38282c532"
+    sha256 cellar: :any, arm64_tahoe:   "1e36ff9a201046d994afcd2ffaac1230f045ca3392bd35214caec21b54a1437b"
+    sha256 cellar: :any, arm64_sequoia: "5265a1bd43c30a898e6ab6b2092a3098beb9bd4ba8e0603c99f4104ba20e09f3"
+    sha256 cellar: :any, arm64_sonoma:  "4319a957c1300eceec87d4afd629f29e8cc7b5d51d640a07032ce05c8d4acb15"
   end
 
   head do
