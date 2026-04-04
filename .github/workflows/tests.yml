@@ -93,10 +93,11 @@ jobs:
 
       - name: Setup Homebrew test environment
         if: matrix.os != 'ubuntu-24.04-arm'
-        run: |
-          brew install jq
-          [[ -e "$(brew tap-info --json homebrew/core | jq -r '.[].path')/Formula/o/openssl@1.1.rb" ]] && rm "$(brew tap-info --json homebrew/core | jq -r '.[].path')/Formula/o/openssl@1.1.rb"
-          brew test-bot --only-setup
+        run: brew test-bot --only-setup
+      #   run: |
+      #     brew install jq
+      #     [[ -e "$(brew tap-info --json homebrew/core | jq -r '.[].path')/Formula/o/openssl@1.1.rb" ]] && rm "$(brew tap-info --json homebrew/core | jq -r '.[].path')/Formula/o/openssl@1.1.rb"
+      #     brew test-bot --only-setup
 
       - name: Install FUSE-T
         if: ${{ runner.os == 'macOS' }}
