@@ -11,18 +11,36 @@ if [ -L "/usr/local/include/fuse" ]; then
   unlink /usr/local/include/fuse
 fi
 
+if [ -L "/usr/local/include/fuse3" ]; then
+  unlink /usr/local/include/fuse3
+fi
+
+if [ -L "/usr/local/bin/go-nfsv4" ]; then
+  unlink /usr/local/bin/go-nfsv4
+fi
+
 if [ -e "/usr/local/include/fuse.h" ]; then
   rm /usr/local/include/fuse.h
   rmdir /usr/local/include 2> /dev/null
 fi
 
+find "/usr/local/lib/" -name "libfuse*.dylib" | xargs rm && find "/usr/local/lib/" -name "libfuse*.a" | xargs rm
+
 if [ -d "/usr/local/lib/pkgconfig" ]; then
-  rmdir -p /usr/local/lib/pkgconfig 2> /dev/null
+  find "/usr/local/lib/pkgconfig/" -name "fuse*.pc" | xargs rm && rmdir -p /usr/local/lib/pkgconfig 2> /dev/null
+fi
+
+if [ -d "/Library/Application Support/fuse-t" ]; then
+  rm -rf "/Library/Application Support/fuse-t"
 fi
 EOF
 
 chmod +x /tmp/fuse-t-uninstall.sh
 
-sudo "/Library/Application Support/fuse-t/uninstall.sh"; sudo /tmp/fuse-t-uninstall.sh
+if [ -e "/Library/Application Support/fuse-t/uninstall.sh" ]; then
+  sudo "/Library/Application Support/fuse-t/uninstall.sh"
+fi
+
+sudo /tmp/fuse-t-uninstall.sh
 
 rm /tmp/fuse-t-uninstall.sh

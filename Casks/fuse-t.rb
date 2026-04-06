@@ -21,11 +21,19 @@ cask "fuse-t" do
     set_ownership ["/usr/local/include", "/usr/local/lib"]
   end
 
-  uninstall script: {
-    executable: "#{HOMEBREW_PREFIX}/bin/brew",
-    args:       ["fuse-t-links-del"],
-    input:      ["Y"],
-  }
+  uninstall script:  {
+              executable: "#{HOMEBREW_PREFIX}/bin/brew",
+              args:       ["fuse-t-links-del"],
+              input:      ["Y"],
+            },
+            pkgutil: [
+              "org.fuse-t.core.#{version}",
+              "org.fuse-t.fskit.#{version}",
+            ]
 
   zap delete: "/Library/Frameworks/fuse_t.framework"
+
+  caveats do
+    license "https://github.com/macos-fuse-t/fuse-t/blob/main/License.txt"
+  end
 end
