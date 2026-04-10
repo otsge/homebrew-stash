@@ -40,12 +40,10 @@ class Curl < Formula
   depends_on "libnghttp2"
   depends_on "libssh2"
   depends_on :macos
-  depends_on "rtmpdump"
   depends_on "zstd"
 
   uses_from_macos "krb5"
   uses_from_macos "openldap"
-  uses_from_macos "zlib"
 
   on_macos do
     depends_on "rust" => :build
@@ -57,10 +55,10 @@ class Curl < Formula
 
   resource "quiche" do
     url "https://github.com/cloudflare/quiche.git",
-    tag:      "0.24.6",
-    revision: "020a43a0a5eed76f57dd3ce5012149aa576c594d"
-    mirror "http://www.surge.box.ca/files/quiche-0.24.6.tar.bz2"
-    sha256 "a5161fb0488a23ec2e31f85662ea8fb81875bea2358a3c26e2442e1605b72635"
+    tag:      "0.28.0",
+    revision: "a9cb314563a5c13791bd7e5a1e32821e53114e75"
+    mirror "http://www.surge.box.ca/files/quiche-0.28.0.tar.bz2"
+    sha256 "50b17243afaa87367e19d916832274d92da68585d7f8b43a0cb6b78e044358e5"
   end
 
   def install
@@ -118,7 +116,6 @@ class Curl < Formula
       --with-default-ssl-backend=openssl
       --with-apple-sectrust
       --with-gssapi
-      --with-librtmp
       --with-libssh2
       --with-quiche=#{quiche.parent}/target/release
       --without-libpsl
@@ -158,21 +155,20 @@ class Curl < Formula
     system bin/"curl", "--verbose", "--http3-only", "--head", "https://cloudflare-quic.com"
 
     # Check dependencies linked correctly
-    # curl_features = shell_output("#{bin}/curl-config --features").split("\n")
-    # %w[brotli GSS-API HTTP2 HTTP3 IDN libz SSL zstd].each do |feature|
-    #   assert_includes curl_features, feature
-    # end
-    # curl_protocols = shell_output("#{bin}/curl-config --protocols").split("\n")
-    # %w[LDAPS RTMP SCP SFTP].each do |protocol|
-    #   assert_includes curl_protocols, protocol
-    # end
+    curl_features = shell_output("#{bin}/curl-config --features").split("\n")
+    %w[brotli GSS-API HTTP2 HTTP3 IDN libz SSL zstd].each do |feature|
+      assert_includes curl_features, feature
+    end
+    curl_protocols = shell_output("#{bin}/curl-config --protocols").split("\n")
+    %w[LDAPS SCP SFTP].each do |protocol|
+      assert_includes curl_protocols, protocol
+    end
 
     system libexec/"mk-ca-bundle.pl", "test.pem"
     assert_path_exists testpath/"test.pem"
     assert_path_exists testpath/"certdata.txt"
 
-    # with_env(PKG_CONFIG_PATH: lib/"pkgconfig") do
-    #   system "pkgconf", "--cflags", "libcurl"
-    # end
+    # ENV["PKG_CONFIG_PATH"] = lib/"pkgconfig"
+    # system "pkgconf", "--cflags", "libcurl"
   end
 end
