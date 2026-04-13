@@ -1,6 +1,6 @@
 cask "stash-app" do
-  version "0.31.0"
-  sha256 "f2a87591ea983312eb0ef70a69b8ab4f2475887642d347b43de60da2bd52ed30"
+  version "0.31.1"
+  sha256 "f132d50b2b76d77ab066d513685bde16760d15ab1e98aae5a885a28a451b80e9"
 
   url "https://github.com/stashapp/stash/releases/download/v#{version}/Stash.app.zip",
       verified: "github.com/stashapp/stash/"
