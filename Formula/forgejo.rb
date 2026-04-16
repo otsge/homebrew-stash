@@ -8,11 +8,11 @@ class Forgejo < Formula
 
   bottle do
     root_url "https://ghcr.io/v2/otsge/stash"
-    sha256 cellar: :any_skip_relocation, arm64_tahoe:   "c107bf2d4582931e5e1189aac0807e82085568ca4d875278ee4ea78637e9a9fd"
-    sha256 cellar: :any_skip_relocation, arm64_sequoia: "ebd4a1c2756d8a179a1c24ca12f36b2d045476433ea28901ea87348b19e6dcb1"
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "3396cd6325aecec1b38abe63fe83f307aad9a2f57ecf441da311d31ea0db34b5"
-    sha256 cellar: :any_skip_relocation, arm64_linux:   "163c7b5608fd2fe4112be95c1727c1cfbf67a48c46d06912e3acaff874cbfa17"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "f688ee580ea6e95475d98fd170c05e11df9081ae952692223e4b89968e5636ef"
+    sha256 cellar: :any_skip_relocation, arm64_tahoe:   "30bcda6d69aea017c1f3907a6763f1ca9b9622a66da9d593baad6dad8edfa3e6"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "d1fb6aafd1e66d8bf315c6d150a62087ffff16a589e26cc14f84cf98ef4c7061"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "df72436ddf68c014a24f73fc3ee9b67e22246d5bc011ca933e2e27834fda52c7"
+    sha256 cellar: :any_skip_relocation, arm64_linux:   "d44446d418a3e04adacd121ef88df3469e71b6f7b32b65e4e5781bf7cec8c3d1"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "6439f350b0adb9066386dae9fcd9242e5de130c7fdfda78b577899a1ed9bfa40"
   end
 
   depends_on "go" => :build
