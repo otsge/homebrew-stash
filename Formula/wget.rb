@@ -5,6 +5,15 @@ class Wget < Formula
   sha256 "766e48423e79359ea31e41db9e5c289675947a7fcf2efdcedb726ac9d0da3784"
   license "GPL-3.0-or-later"
 
+  bottle do
+    root_url "https://ghcr.io/v2/otsge/stash"
+    sha256 arm64_tahoe:   "76df91bd66f4a991e2993821970eb2bcf7bb67bbb2dbb93085d2ce7a259cda35"
+    sha256 arm64_sequoia: "94575387bcabc74beb8ab35508ceaecab1ab30610ef584a821c798c8d39f7bba"
+    sha256 arm64_sonoma:  "9318b622dec469c938ee271361b285e68cbcbc49f11cc2b897b2898ac0d6a42d"
+    sha256 arm64_linux:   "46cc707578a726f2995d14f004b58b9b25fc91cc838138021748d93bf1c43c2b"
+    sha256 x86_64_linux:  "011204e55f933c10e2f846d9d9baa42664ac8ae14b4c9751c98d3a961d0ae433"
+  end
+
   head do
     url "https://git.savannah.gnu.org/git/wget.git", branch: "master"
 
