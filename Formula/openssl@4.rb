@@ -10,6 +10,15 @@ class OpensslAT4 < Formula
     regex(/href=.*?openssl[._-]v?(4(?:\.\d+)+)\.t/i)
   end
 
+  bottle do
+    root_url "https://ghcr.io/v2/otsge/stash"
+    sha256 arm64_tahoe:   "313e97ad00760a9254685928aa7696e782e673c6329d18b0a10c558274ffd652"
+    sha256 arm64_sequoia: "2f421e6641fdd58a40abe30919d4cf9eb0d6d31d5fe9c1d4e0b296ce6ce865aa"
+    sha256 arm64_sonoma:  "0b145732da54d4f38536c09679dca75c1eb3b4f771c9ebd60b5b8b0cbd4ecc35"
+    sha256 arm64_linux:   "7b768c792fdc11db9ac2aa77aebe866bebc9095db09d29659d10f90ccb883625"
+    sha256 x86_64_linux:  "ddf73e3f21f5447aaa697198bbe02110790405bd64f16115ee05f6beebeb769c"
+  end
+
   keg_only :versioned_formula
 
   depends_on "brotli"
