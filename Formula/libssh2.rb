@@ -12,6 +12,15 @@ class Libssh2 < Formula
     regex(/href=.*?libssh2[._-]v?(\d+(?:\.\d+)+)\./i)
   end
 
+  bottle do
+    root_url "https://ghcr.io/v2/otsge/stash"
+    sha256 cellar: :any,                 arm64_tahoe:   "8d17d7dc0c404ce77d38fb0c2ba598c8b6b0c5a29d046c6f97c247201086bccb"
+    sha256 cellar: :any,                 arm64_sequoia: "366ca086221d13f0a25492896a4ea594c0f1c80ec49b6e74630e4205d81b0949"
+    sha256 cellar: :any,                 arm64_sonoma:  "838a0f8e712756ffdf8ed30b12e0af5292f59c35daa21915cb809d10d4ed6bd1"
+    sha256 cellar: :any_skip_relocation, arm64_linux:   "0f5fdab71b3da877f9a2bad15bd35412a3984840d9fef6b9c24b6aa19696b413"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "a6b72662711c2d4fa6a5fe5d7ce0764bf42617a9fda5d26fc24996dc4eb54097"
+  end
+
   head do
     url "https://github.com/libssh2/libssh2.git", branch: "master"
 
