@@ -6,6 +6,15 @@ class Libngtcp2 < Formula
   sha256 "dfd2c68bd64b89847c611425b9487105c46e8447b5c21e6aeb00642c8fbe2ca8"
   license "MIT"
 
+  bottle do
+    root_url "https://ghcr.io/v2/otsge/stash"
+    sha256 cellar: :any,                 arm64_tahoe:   "9da5402bddb0dc6c6ae2d0d8b933c3fba121da69024cc031f0b700ddd0be1682"
+    sha256 cellar: :any,                 arm64_sequoia: "4fa75674ba1f35d6d7dbe1661f08d5bd405d902d6c6e233e685a04848e30287e"
+    sha256 cellar: :any,                 arm64_sonoma:  "66539ab17c10b8e24d3ffb06b1a2308e6e7d81ff3e6a7e0657d353db11703dfb"
+    sha256 cellar: :any_skip_relocation, arm64_linux:   "d27a892418ed31d3f73361d31eee5e07d498e1e649b9d9c53f4ab4e0ab1a1d23"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "195b036326f1dc47642aced416777c5301407605d66c96e650b378fb23eb5ab9"
+  end
+
   head do
     url "https://github.com/ngtcp2/ngtcp2.git", branch: "main"
 
